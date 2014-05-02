@@ -86,7 +86,7 @@ if ( function_exists( 'wpc_web_fonts_user_selection' ) ) {
 $fonts = array_merge( $fonts, $custom_fonts );
 ksort( $fonts );`
 
-### How do I check if `WP Canvas - Web Fonts` plugin is activated?
+### How do I check if 'WP Canvas - Web Fonts' plugin is activated?
 
 `<?php
 // We are checking if the plugin has been activated or not

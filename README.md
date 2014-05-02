@@ -90,7 +90,7 @@ $fonts = array_merge( $fonts, $custom_fonts );
 ksort( $fonts );
 ```
 
-### How do I check if `WP Canvas - Web Fonts` plugin is activated?
+### How do I check if 'WP Canvas - Web Fonts' plugin is activated?
 
 ```
 <?php
