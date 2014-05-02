@@ -42,15 +42,18 @@ Thank you so much for even considering supporting my work. If you have benefited
 
 Select your fonts you want to use, and then set the family name inside your CSS editor.
 
-`/* Custom Font CSS */
+```
+/* Custom Font CSS */
 .site-title {
 	font-family: 'Dancing Script';
 	font-weight: 400;
-}`
+}
+```
 
 ### How do I append user selected web fonts to my fonts list in my theme?
 
-`<?php
+```
+<?php
 // Create array of web safe fonts
 $fonts = array(
    'arial' => 'Arial, Helvetica, sans-serif',
@@ -84,16 +87,19 @@ if ( function_exists( 'wpc_web_fonts_user_selection' ) ) {
 
 // Merge and sort fonts
 $fonts = array_merge( $fonts, $custom_fonts );
-ksort( $fonts );`
+ksort( $fonts );
+```
 
 ### How do I check if `WP Canvas - Web Fonts` plugin is activated?
 
-`<?php
+```
+<?php
 // We are checking if the plugin has been activated or not
 if ( ! defined( 'WPC_WEB_FONTS_IS_ACTIVATED' ) ) {
 	$google_font_code = 'Nixie+One|Dancing+Script';
 	wp_enqueue_style( 'google-web-fonts', 'http://fonts.googleapis.com/css?family=' . $google_font_code );
-}`
+}
+```
 
 ## Screenshots ##
 
