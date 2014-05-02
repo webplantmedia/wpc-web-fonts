@@ -100,8 +100,21 @@
 *
 * Styles for Fonts subpage in Wordpress dashboard
 */
-.wpcwf-upload-font-textarea {
+.wpcwf-font-upload-wrapper {
 	max-width: 900px;
-	height: 210px;
 	width: 97%;
+}
+.wpcwf-upload-font-textarea {
+	height: 210px;
+	width: 100%;
+}
+.wpcwf-upload-preview {
+	margin-bottom: 5px;
+	padding: 8px 12px 10px 12px;
+}
+.wpcwf-upload-preview-p {
+	font-size: 28px;
+}
+.wpcwf-upload-preview p {
+	margin: 0;
 }

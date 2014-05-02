@@ -110,6 +110,14 @@ $group_name = $this->plugin->get_plugin_slug() . '-upload';
 					<?php if ( ! empty( $at_font_face ) ) : ?>
 						<div class="wpcwf-font-upload-wrapper">
 							<textarea name="<?php echo $option_name; ?>[]" class="wpcwf-upload-font-textarea" rows="5" cols="30"><?php echo esc_textarea($at_font_face); ?></textarea><br />
+							<?php $family = $this->plugin->helper->parse_font_family_name( $at_font_face ); ?>
+							<?php if ( is_array( $family ) && ! empty( $family ) ) : ?>
+								<?php list( $key, $name ) = $family; ?>
+								<div class="postbox wpcwf-upload-preview">
+									<p class="wpcwf-upload-preview-p" style='font-family:"<?php echo $name; ?>"'><?php _e( 'Ye are the light of the world.', 'wpc_web_fonts' ); ?></p>
+									<p class="description"><code>font-family:'<?php echo $name; ?>';</code></p>
+								</div>
+							<?php endif; ?>
 							<a class="button wpcwf-image-upload" data-target=".wpcwf-upload-font-textarea" data-frame="select" data-state="wordpresscanvas_insert_fonts" data-fetch="fonts" data-title="Insert Font" data-button="Insert" data-class="media-frame" title="Add Font"><span class="wp-media-buttons-icon"></span> <?php echo __( 'Add Font', 'wpc_web_fonts' ); ?></a>
 							<a class="button wpcwf-delete-font"><?php echo __( 'Delete', 'wpc_web_fonts' ); ?></a>
 							<br /><br />

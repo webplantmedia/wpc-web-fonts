@@ -82,9 +82,15 @@ class WPC_Web_Fonts {
 		add_action( 'wp', array( $this, 'set_google_font_code' ) );
 		add_action( 'admin_init', array( $this, 'set_google_font_code' ) );
 
+		add_action( 'wp', array( $this, 'set_uploaded_fonts' ) );
+		add_action( 'admin_init', array( $this, 'set_uploaded_fonts' ) );
+
 		// Load public-facing style sheet and JavaScript.
+		add_action( 'wp_head', array( $this, 'inline_styles' ), 9999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		add_filter( 'mime_types', array( $this, 'add_font_mime_types' ), 10, 1 );
 
 	}
 
@@ -158,8 +164,22 @@ class WPC_Web_Fonts {
 
 	public function set_uploaded_fonts() {
 
-		$this->uploaded_fonts = get_option( $this->plugin_prefix . '_uploaded', apply_filters( 'wpc_web_fonts_default_uploads', '' ) );
+		$this->uploaded_fonts = get_option( $this->plugin_prefix . '_upload', apply_filters( 'wpc_web_fonts_default_uploads', '' ) );
 
+	}
+
+	public function inline_styles() {
+
+		// Load uploaded fonts
+		if ( $uploaded_fonts = $this->get_uploaded_fonts() ) {
+			ob_start();
+			include_once( 'views/css-custom-fonts.php' );
+			$html = ob_get_clean();
+
+			$html = $this->helper->minify_css( $html );
+
+			echo '<style type="text/css">' . $html . '</style>';
+		}
 	}
 
 	/**
@@ -213,5 +233,23 @@ class WPC_Web_Fonts {
 	 * @since    1.0.0
 	 */
 	public static function single_deactivate() {
+	}
+
+	/**
+	 * Adds font extensions support to Wordpress uploader
+	 *
+	 * @since 3.5.2
+	 * @access public
+	 *
+	 * @param array $ext 
+	 * @return array
+	 */
+	public function add_font_mime_types( $mime_types ) {
+		$mime_types['eot|woff'] = 'application/octet-stream';
+		$mime_types['ttf'] = 'application/x-font-ttf';
+		$mime_types['svg'] = 'image/svg+xml';
+		$mime_types['otf'] = 'application/vnd.ms-opentype';
+
+		return $mime_types;
 	}
 }

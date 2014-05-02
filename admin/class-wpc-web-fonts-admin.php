@@ -63,6 +63,8 @@ class WPC_Web_Fonts_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
+		add_action( 'admin_head', array( $this, 'inline_styles' ), 9999 );
+
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
@@ -70,15 +72,6 @@ class WPC_Web_Fonts_Admin {
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
-
-		/*
-		 * Define custom functionality.
-		 *
-		 * Read more about actions and filters:
-		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-		 */
-		add_filter( 'mime_types', array( $this, 'add_font_mime_types' ), 10, 1 );
-
 	}
 
 	/**
@@ -114,6 +107,28 @@ class WPC_Web_Fonts_Admin {
 		$screen = get_current_screen();
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), WPC_Web_Fonts::VERSION );
+		}
+
+	}
+
+	public function inline_styles() {
+
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+			// Load uploaded fonts
+			if ( $uploaded_fonts = $this->plugin->get_uploaded_fonts() ) {
+				ob_start();
+				include_once( 'views/css-custom-fonts.php' );
+				$html = ob_get_clean();
+
+				$html = $this->plugin->helper->minify_css( $html );
+
+				echo '<style type="text/css">' . $html . '</style>';
+			}
 		}
 
 	}
@@ -207,23 +222,4 @@ class WPC_Web_Fonts_Admin {
 		);
 
 	}
-
-	/**
-	 * Adds font extensions support to Wordpress uploader
-	 *
-	 * @since 3.5.2
-	 * @access public
-	 *
-	 * @param array $ext 
-	 * @return array
-	 */
-	public function add_font_mime_types( $mime_types ) {
-		$mime_types['eot|woff'] = 'application/octet-stream';
-		$mime_types['ttf'] = 'application/x-font-ttf';
-		$mime_types['svg'] = 'image/svg+xml';
-		$mime_types['otf'] = 'application/vnd.ms-opentype';
-
-		return $mime_types;
-	}
-
 }

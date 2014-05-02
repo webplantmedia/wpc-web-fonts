@@ -46,15 +46,16 @@ if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
  * Public Functions to be used by Themes or Plugins
  *----------------------------------------------------------------------------*/
 
-function wpc_web_fonts_user_selection( $default ) {
+function wpc_web_fonts_user_selection( $google_code = '', $at_font_face = array() ) {
 	$wpc_web_fonts = WPC_Web_Fonts::get_instance();
 
-	$google_font_code = get_option( $wpc_web_fonts->get_plugin_prefix() . '_google', $default );
+	$google_font_code = get_option( $wpc_web_fonts->get_plugin_prefix() . '_google', $google_code );
+	$uploaded_fonts = get_option( $wpc_web_fonts->get_plugin_prefix() . '_upload', $at_font_face );
 
-	$list = $wpc_web_fonts->helper->generate_font_list( $google_font_code );
+	$list = $wpc_web_fonts->helper->generate_font_list( $google_font_code, $uploaded_fonts );
 
 	if ( ! empty( $list ) )
 		return $list;
-	else
-		return $default;
+
+	return array();
 }

@@ -95,7 +95,7 @@ class WPC_Web_Fonts_Helper {
 	 *
 	 * @return void
 	 */
-	public function generate_font_list( $font_code ) {
+	public function generate_font_list( $font_code, $uploaded_fonts ) {
 		$sort = false;
 		$list = array();
 
@@ -109,16 +109,12 @@ class WPC_Web_Fonts_Helper {
 			}
 		}
 
-		$option_name = $this->plugin_prefix . '_uploaded';
-		$uploaded_fonts = get_option( $option_name );
 		if ( !empty( $uploaded_fonts ) && is_array( $uploaded_fonts ) ) {
 			foreach( $uploaded_fonts as $font ) {
-				if ( preg_match( '/font-family:([A-Za-z0-9\-_"\'\s]+);/', $font, $matches ) ) {
-					if ( ! empty( $matches ) && isset( $matches[1] ) ) {
-						$name = $this->sanitize_font_family_name( $matches[1] );
-						$key = $this->sanitize_key( $name );
+				if ( $family = $this->parse_font_family_name( $font ) ) {
+					if ( is_array( $family ) && ! empty( $family ) ) {
+						list( $key, $name ) = $family;
 						$list[ $key ] = '"' . $name . '"';
-
 						$sort = true;
 					}
 				}
@@ -129,6 +125,18 @@ class WPC_Web_Fonts_Helper {
 			ksort( $list );
 
 		return $list;
+	}
+
+	public function parse_font_family_name( $font ) {
+		if ( preg_match( '/font-family:([A-Za-z0-9\-_"\'\s]+);/', $font, $matches ) ) {
+			if ( ! empty( $matches ) && isset( $matches[1] ) ) {
+				$name = $this->sanitize_font_family_name( $matches[1] );
+				$key = $this->sanitize_key( $name );
+				return array( $key, $name );
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -915,6 +923,19 @@ class WPC_Web_Fonts_Helper {
 
 		 return null;
 	 }
+
+	public function minify_css( $buffer ) {
+		// Remove comments
+		$buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+
+		// Remove space after colons
+		$buffer = str_replace(': ', ':', $buffer);
+
+		// Remove whitespace
+		$buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+
+		return $buffer;
+	}
 
 	 public function drop_table() {
 		global $wpdb;
