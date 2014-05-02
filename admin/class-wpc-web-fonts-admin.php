@@ -135,7 +135,9 @@ class WPC_Web_Fonts_Admin {
 
 		$screen = get_current_screen();
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+			wp_enqueue_media();
 			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), WPC_Web_Fonts::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-media-script', plugins_url( 'assets/js/media.js', __FILE__ ), array( 'jquery' ), WPC_Web_Fonts::VERSION, true );
 		}
 
 	}

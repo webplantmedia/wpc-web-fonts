@@ -94,3 +94,14 @@
 .wpcwf-column-half.wpcwf-column-last {
 	margin-right: 0;
 } */
+
+/**
+* Custom Fonts
+*
+* Styles for Fonts subpage in Wordpress dashboard
+*/
+.wpcwf-upload-font-textarea {
+	max-width: 900px;
+	height: 210px;
+	width: 97%;
+}

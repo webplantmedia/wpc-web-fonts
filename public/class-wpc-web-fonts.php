@@ -50,6 +50,7 @@ class WPC_Web_Fonts {
 	protected $plugin_slug = 'wpc-web-fonts';
 	protected $plugin_prefix = 'wpc_web_fonts';
 	protected $google_font_code = '';
+	protected $uploaded_fonts = '';
 
 	public static $helper = null;
 
@@ -102,6 +103,10 @@ class WPC_Web_Fonts {
 		return $this->google_font_code;
 	}
 
+	public function get_uploaded_fonts() {
+		return $this->uploaded_fonts;
+	}
+
 	/**
 	 * Return the plugin prefix.
 	 *
@@ -148,6 +153,12 @@ class WPC_Web_Fonts {
 	public function set_google_font_code() {
 
 		$this->google_font_code = get_option( $this->plugin_prefix . '_google', apply_filters( 'wpc_web_fonts_default_google_code', '' ) );
+
+	}
+
+	public function set_uploaded_fonts() {
+
+		$this->uploaded_fonts = get_option( $this->plugin_prefix . '_uploaded', apply_filters( 'wpc_web_fonts_default_uploads', '' ) );
 
 	}
 
