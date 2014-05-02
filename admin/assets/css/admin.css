@@ -1,0 +1,96 @@
+/* This stylesheet is used to style the admin option form of the plugin. */
+
+/**
+* CSS Hacks
+*
+* Needed common CSS trick
+*/
+
+.wpcwf-clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+ }
+
+.wpcwf-clearfix { display: inline-block; }
+
+* html .wpcwf-clearfix { 
+	height: 1%;
+}
+
+.wpcwf-clearfix { display: block; }
+
+
+/**
+* Google Fonts
+*
+* Styles for Fonts subpage in Wordpress dashboard
+*/
+
+.wpcwf-google-fonts-wrapper {
+	width: 500px;
+}
+
+.wpcwf-font-table {
+	height: 300px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	border: 1px solid #e5e5e5;
+	padding: 8px 12px 10px;
+}
+
+.wpcwf-font-row {
+	clear: both;
+	padding: 0;
+}
+.wpcwf-font-variant-row {
+	padding: 5px 0;
+}
+
+.wpcwf-font-row:nth-child(even) {
+	background-color: #e5e5e5;
+}
+
+.wpcwf-font-title {
+	width: 200px;
+	float: left;
+	padding-right: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.wpcwf-font-variants {
+	width: 200px;
+	float: left;
+}
+
+#wpcwf-font-preview {
+	font-size: 28px;
+	line-height: 1.5;
+	padding: 8px 12px 10px;
+}
+
+.wpcwf-font-preview-text {
+	margin-right: 10px;
+}
+
+#wpc-web-fonts-plugin .wpcwf-font-row-remove {
+	vertical-align: middle;
+}
+
+.wpcwf-font-preview-row {
+	margin-bottom: 15px;
+}
+/* .wpcwf-column-half {
+	width: 49.5%;
+	float: left;
+	margin-right: 1%;
+}
+.wpcwf-column-half.wpcwf-column-last {
+	margin-right: 0;
+} */
