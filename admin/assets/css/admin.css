@@ -102,11 +102,14 @@
 */
 .wpcwf-font-upload-wrapper {
 	max-width: 900px;
-	width: 97%;
+	width: 100%;
 }
 .wpcwf-upload-font-textarea {
 	height: 210px;
 	width: 100%;
+}
+.wpcwf-font-preview-wrapper {
+	max-width: 900px;
 }
 .wpcwf-upload-preview {
 	margin-bottom: 5px;

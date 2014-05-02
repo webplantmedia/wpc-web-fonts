@@ -85,7 +85,7 @@ $google_fonts = $this->plugin->helper->get_fonts();
 
 		</div>
 
-		<div>
+		<div class="wpcwf-font-preview-wrapper">
 
 			<h3><?php echo __( 'Google Font Preview', 'wpc_web_fonts' ); ?></h3>
 
